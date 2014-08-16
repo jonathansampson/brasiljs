@@ -1,0 +1,12 @@
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Segoe UI";
+}
+
+#code {
+	white-space: pre;
+	background-color: white;
+}
+
+.code-column {
+	padding-top: 1em;
+}
