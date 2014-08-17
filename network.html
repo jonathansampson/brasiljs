@@ -3,26 +3,72 @@
 	<head>
 		<title>Jonathan Sampson - Mastering Internet Explorer's F12 Developer Tools</title>
 		<script type="text/javascript" src="/res/jquery-2.1.1/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="/res/js/core-carryover.js"></script>
 		<link rel="stylesheet" type="text/css" href="/res/bootstrap-3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/res/css/main.css">
 	</head>
 	<body class="container">
+
+		<div class="col-md-12">
+			<h1><a href="/index.html">../</a> Network</h1>
+		</div>
 		
 		<div class="col-md-6">
 
-			<h1><a href="/index.html">../</a> Network</h1>
-
-			<ul>
-				<li>Scenario</li>
+			<h3>Network Recording</h3>
+			<p>Monitoring the Network tab can help you identify when certain resources aren't loading.</p>
+			<ul class="list-group">
+				<li class="list-group-item">Attempting to load status.modern.ie features...</li>
 			</ul>
 
 		</div>
 
-		<div class="col-md-6">
-
-			<code>Source Code</code>
-
+		<div class="col-md-6 code-column">
+			<code id="code">...</code>
 		</div>
+
+<script id="core">
+	(function () {
+
+		"use strict";
+
+		var features = "http://status.modern.ie/features";
+
+		// If the url is invalid, the request will be aborted
+		$.ajax({ dataType: "json", url: features })
+			.then( buildFeatureList )
+			.fail( updateUIUponFail );
+
+		function buildFeatureList ( data ) {
+			
+			var states = {}, status;
+
+			$.each( data, function ( index, entry ) {
+				status = entry.ieStatus.text;
+				if ( ! ( status in states ) ) {
+					states[ status ] = 1;
+				} else {
+					states[ status ] = states[ status ] + 1;
+				}
+			});
+
+			console.log( states );
+
+		}
+
+		function updateUIUponFail ( xhr, status ) {
+			$(".list-group-item")
+				.addClass( "list-group-item-danger" )
+				.text( features + " failed" );
+		}
+
+	}());
+</script>
+
+		<style>
+
+
+		</style>
 
 	</body>
 </html>

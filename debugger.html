@@ -32,6 +32,9 @@
 
 			<p>You can select multiple breakpoints with the <kbd>Ctrl</kbd> and/or <kbd>Shift</kbd> keys.</p>
 
+			<h3>Just My Code</h3>
+			<p>Spend more time in your code, and less time in others'. You can mark certain files as <em>Library Code</em> in order to avoid them when debugging.</p>
+
 		</div>
 
 		<div class="col-md-6 code-column">
@@ -46,7 +49,8 @@
 		var range = document.querySelector( "input" ),
 			count = document.querySelector( ".count" );
 
-		range.addEventListener( "change", function () {
+		// Debugging code like this used to mean wading through jQuery
+		$(range).on( "change", function changeHandler () {
 			count.parentElement.className = "cats" + this.value;
 			count.textContent = this.value;
 		});
