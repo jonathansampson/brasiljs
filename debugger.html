@@ -18,6 +18,20 @@
 			<h3>Source maps &amp; Source Map Designation</h3>
 			<p>For various reasons, library code may not contain a source map comment in its footer. The F12 Debugger will now allow you to manually associate a map to a given source file. By right-clicking on a file in the debugger, you can now select the <em>Choose source map</em> option.</p>
 
+			<h3>Event Breakpoints &amp; Tracepoints</h3>
+			<p>You can use <em>Event Breakpoints</em> to interrupt difficult-to-locate events in your page life-cycle. If you're not looking for something that extreme, you can use <em>Event Tracepoints</em> to merely notify you of such events.</p>
+
+			<input type="range" max="3" value="1">
+
+			<p class="cats1">
+				<span class="count">1</span> Kitten(s). 
+				<img src="/res/img/cat1.jpg" class="img-circle"> 
+				<img src="/res/img/cat2.jpg" class="img-circle"> 
+				<img src="/res/img/cat3.jpg" class="img-circle">
+			</p>
+
+			<p>You can select multiple breakpoints with the <kbd>Ctrl</kbd> and/or <kbd>Shift</kbd> keys.</p>
+
 		</div>
 
 		<div class="col-md-6 code-column">
@@ -29,20 +43,30 @@
 
 		"use strict";
 
-		var images = [];
+		var range = document.querySelector( "input" ),
+			count = document.querySelector( ".count" );
 
-		for ( var i = 0, image; i < 5; i++ ) {
-			image = document.createElement( "img" );
-			image.src = "http://placekitten.com/100/100?image=" + i;
-			images.push( image );
-		}
+		range.addEventListener( "change", function () {
+			count.parentElement.className = "cats" + this.value;
+			count.textContent = this.value;
+		});
 
 	}());
 </script>
 
 		<style>
 
+			p img {
+				opacity: 0;
+				transition: opacity 1s;
+			}
 
+			.cats1 img:nth-of-type(1) { opacity: 1; }
+
+			.cats2 img { opacity: 1; }
+			.cats2 img:nth-of-type(3) { opacity: 0; }
+
+			.cats3 img { opacity: 1; }
 
 		</style>
 
