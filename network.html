@@ -16,10 +16,12 @@
 		<div class="col-md-6">
 
 			<h3>Network Recording</h3>
-			<p>Monitoring the Network tab can help you identify when certain resources aren't loading.</p>
+			<p>Monitoring the Network tab can help you identify when things don't go as planned. Investigate why the following isn't loading data from status.modern.ie.</p>
 			<ul class="list-group">
 				<li class="list-group-item">Attempting to load status.modern.ie features...</li>
 			</ul>
+
+			TODO: repair a file downloaded as .js from github/raw
 
 		</div>
 
@@ -32,7 +34,7 @@
 
 		"use strict";
 
-		var features = "http://status.modern.ie/features";
+		var features = "http://status.modern.com/features";
 
 		// If the url is invalid, the request will be aborted
 		$.ajax({ dataType: "json", url: features })
