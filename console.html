@@ -3,26 +3,93 @@
 	<head>
 		<title>Jonathan Sampson - Mastering Internet Explorer's F12 Developer Tools</title>
 		<script type="text/javascript" src="/res/jquery-2.1.1/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="/res/js/core-carryover.js"></script>
 		<link rel="stylesheet" type="text/css" href="/res/bootstrap-3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/res/css/main.css">
 	</head>
 	<body class="container">
+
+		<div class="col-md-12">
+			<h1><a href="/index.html">../</a> Console</h1>
+		</div>
 		
 		<div class="col-md-6">
 
-			<h1><a href="/index.html">../</a> Console</h1>
+			<h3>Toggling Visibility</h3>
+			<p>You can pop the console up from within any tool using <kbd>Ctrl</kbd>+<kbd>`</kbd>. You can always switch to the full console tool as well by typing <kbd>Ctrl</kbd>+<kbd>2</kbd>.</p>
 
-			<ul>
-				<li>Scenario</li>
-			</ul>
+			<h3>Messages, Warnings, &amp; Errors</h3>
+			<p>During the life-cycle of your app, you may wish to raise certain messages. Each of these may differ from one another by severity and purpose. You can log text, info, a warning, or an error.</p>
+
+			<button type="button" class="btn btn-default" id="pest">Cranky Button</button>
+
+			<h3>Console Shortcuts</h3>
+			<dl class="dl-horizontal">
+				<dt>$, $$</dt>
+				<dd>Shortcuts to <code>document.querySelector</code> and <code>qSA</code></dd>
+				<dt>$0-$5</dt>
+				<dd>Historical references to previously selected elements</dd>
+				<dt>$_</dt>
+				<dd>Reference to the last returned value</dd>
+				<dt>.*</dt>
+				<dd>Contextual auto complete (helpful when debugging)</dd>
+				<dt><kbd>Ctrl</kbd>+<kbd>L</kbd></dt>
+				<dd>Clean the console of any lingering messages</dd>
+			</dl>
 
 		</div>
 
-		<div class="col-md-6">
-
-			<code>Source Code</code>
-
+		<div class="col-md-6 code-column">
+			<code id="code">...</code>
 		</div>
+
+<script id="core">
+	(function () {
+
+		"use strict";
+	
+		var clicks = 0, method = "", message = "",
+			pest = document.querySelector( "#pest" ),
+			type = [ "log", "info", "warn", "error" ],
+			msgs = [ 
+				"Don't poke me.", 
+				"Seriously, stop it.", 
+				"I'll quit. I'm serious.", 
+				"One more time. Just try me!"
+			];
+
+		pest.addEventListener( "click", function pester () {
+			if ( clicks < type.length ) {
+				message = msgs[ clicks % type.length ];
+				method  = type[ clicks++ ];
+				console[ method ]( pest.textContent = message );
+			} else {
+				pest.removeEventListener( "click", pester );
+				pest.textContent = "Player 2 has left the game.";
+				pest.disabled = true;
+			}
+		});
+
+	}());
+</script>
+
+		<style>
+
+			.dl-horizontal dt { width: 70px; }
+			.dl-horizontal dd { margin-left: 90px; }
+
+			button {
+				left: 0;
+				opacity: 1;
+				position: relative;
+				transition: all 5s;
+			}
+			button.btn[disabled] {
+				left: -50%;
+				opacity: 0;
+			}
+
+		</style>
 
 	</body>
 </html>

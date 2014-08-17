@@ -1,6 +1,10 @@
-$(function () {
+document.addEventListener( "DOMContentLoaded", function codeCarryOver () {
 
-	var code = document.querySelector( "#core" ).outerHTML;
+	var core = document.querySelector( "#core" ),
+		code = document.querySelector( "#code" );
+	
+	if ( core && code ) {
+		code.textContent = core.outerHTML;
+	}
 
-	document.querySelector( "#code" ).textContent = code;
 });

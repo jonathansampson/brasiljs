@@ -8,42 +8,46 @@
 		<link rel="stylesheet" type="text/css" href="/res/css/main.css">
 	</head>
 	<body class="container">
+
+		<div class="col-md-12">
+			<h1><a href="/index.html">../</a> DOM Explorer</h1>
+		</div>
 		
 		<div class="col-md-6">
 
-			<h1><a href="/index.html">../</a> DOM Explorer</h1>
-
-			<h4>Modifying Nodes &amp; Attributes</h4>
+			<h3>Modifying Nodes &amp; Attributes</h3>
 			<p>The following expects each button to have a <code>data-type</code> attribute. Try adding one with the value of <code>"great"</code> to the first button.</p>
 			<p>When finished, click the button to see if the event handling has been restored.</p>
-			<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group btn-group-justified">
 				<!-- add [data-type='great'] -->
 				<button type="button" class="btn btn-default">Great Browser</button>
 				<button type="button" class="btn btn-default">Greater Browser</button>
 			</div>
 
-			<h4>Re-arranging Elements</h4>
+			<h3>Re-arranging Elements</h3>
 			<p>These buttons are cleary not arranged properly. Using the DOM Explorer, try dragging the elements into the correct order.</p>
-			<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group btn-group-justified">
 				<!-- general sibling selectors making progressively dimmer -->
 				<button type="button" class="btn btn-default dimmer">Bright</button>
 				<button type="button" class="btn btn-default dimmer">Brighter</button>
 				<button type="button" class="btn btn-default dimmer">Brightest</button>
 			</div>
 
-			<h4>Finding Event Listeners</h4>
+			<h3>Finding Event Listeners</h3>
 			<p>When inspecting the button labeled <em>Direct Listener</em> in the developer tools, you can see all associated handlers within the Events panel.</p>
 			<p>The Events panel gives you a live view; we can watch in real-time as handlers are added and removed.</p>
-			<div class="btn-group btn-group-lg btn-group-justified">
+			<div class="btn-group btn-group-justified">
 				<!-- one has a listener, and the other doesn't -->
 				<button type="button" class="btn btn-default" data-listen>Direct Listener</button>
 				<button type="button" class="btn btn-default">Delegated Listener</button>
 			</div>
 
-			<h4>Persisting Pseudo States <small>Hover me</small></h4>
+			<h3>Persisting Pseudo States <small>Hover me</small></h3>
 			<!-- hover + sibling-selector reveals picture -->
 			<figure>
+
 				<img src="/res/img/hello.gif">
+
 			</figure>
 
 		</div>
@@ -71,36 +75,35 @@
 
 	}());
 </script>
-<style>
 
-	h4 { margin-top: 2em; }
-	
-	.dimmer + .dimmer { opacity: .75; }
-	.dimmer + .dimmer + .dimmer { opacity: .35; }
+		<style>
+			
+			.dimmer + .dimmer { opacity: .75; }
+			.dimmer + .dimmer + .dimmer { opacity: .35; }
 
-	figure { opacity: 0; transition: opacity 2s; }
-	h4:hover { cursor: pointer; }
-	h4:hover + figure { opacity: 1; }
-	figure img { width: 100%; }
+			figure { opacity: 0; transition: opacity 2s; }
+			h3:hover { cursor: pointer; }
+			h3:hover + figure { opacity: 1; }
+			figure img { width: 100%; }
 
-	body::before {
-		content: "";
-		z-index: 1;
-		opacity: 0;
-		position: absolute;
-		top: 50%; left: 50%;
-		transition: opacity 2s;
-		width: 50vmin; height: 50vmin;
-		background-size: 100% 100%;
-		transform: translate(-50%, -50%);
-		background-image: url("/res/img/browser.png");
-	}
+			body::before {
+				content: "";
+				z-index: 1;
+				opacity: 0;
+				position: absolute;
+				top: 50%; left: 50%;
+				transition: opacity 2s;
+				width: 50vmin; height: 50vmin;
+				background-size: 100% 100%;
+				transform: translate(-50%, -50%);
+				background-image: url("/res/img/browser.png");
+			}
 
-	body.great::before {
-		opacity: 1;
-	}
+			body.great::before {
+				opacity: 1;
+			}
 
-</style>
+		</style>
 
 	</body>
 </html>
