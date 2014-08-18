@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Jonathan Sampson - Mastering Internet Explorer's F12 Developer Tools</title>
+		<script src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 		<script src="/res/detect/detect.js"></script>
 		<script src="/res/jquery-2.1.1/jquery-2.1.1.min.js"></script>
 		<script src="/res/js/core-carryover.js"></script>
@@ -16,15 +17,19 @@
 		
 		<div class="col-md-6">
 
-			<h3>Network Recording</h3>
-
 			<h3>User Agent Spoofing</h3>
-			<p id="uastring" class="text-center">...</p>
-			<dl class="dl-horizontal">
-				<dt>Browser</dt><dd id="bname"></dd>
-				<dt>Device</dt><dd id="device"></dd>
-				<dt>OS</dt><dd id="OS"></dd>
-			</dl>
+			<p id="browser"></p>
+			<p id="uastring">...</p>
+
+			<p>You can also persist Emulation settings across sessions.</p>
+
+			<h3>Geolocation Spoofing</h3>
+			<button type="button" class="btn btn-default">Map Location</button>
+			<div id="mapBx"></div>
+
+			<h3 class="color">Repair Legacy Documents</h3>
+			<p>For pages and sites designed in the annals of history, we're not always positive they will render in modern engines the way they did in the past. As a result, we can persist support for legacy projects via document modes.</p>
+			<p>Put this document into IE 9 Document Mode to repair our fabulous headings!</p>
 
 		</div>
 
@@ -37,18 +42,54 @@
 
 		"use strict";
 
-		var browser = detect.parse( navigator.userAgent );
+		var uaGuess  = detect.parse(  navigator.userAgent  ),
+			browser  = document.querySelector( "#browser"  ),
+			uastring = document.querySelector( "#uastring" );
 
-		uastring.textContent = browser.source;
-		bname.textContent = browser.browser.name;
-		device.textContent = browser.device.type;
-		OS.textContent = browser.os.name;
+		// Guess our browser based on the user agent string
+		uastring.textContent = uaGuess.source;
+		browser.textContent = uaGuess.browser.name + " on " +uaGuess.os.name;
+
+		var mapButton = document.querySelector( "button" ),
+			mapWindow = document.querySelector( "#mapBx" );
+
+		// Spoof coords: try -21.805, -49.09 instead
+		mapButton.addEventListener( "click", function addMap () {
+			this.parentElement.removeChild( this );
+			navigator.geolocation.getCurrentPosition(function ( pos ) {
+				Microsoft.Maps.Map( mapWindow, {
+					zoom: 16, mapTypeId: "a", 
+					center: pos.coords, showDashboard: false,
+					credentials: "Au5VDoBNruzAm9YkLVhmOZ7H3-wR8OY9" +
+							    "6xR7mwiuij1cmRSx0MLFfMrnxDXNOfKN"
+				});
+			});
+		});
 
 	}());
 </script>
 
 		<style>
 
+			h3 {
+				/* awesomesauce */
+				color: #fe57a1\9;
+			}
+
+			.dl-horizontal dt {
+				width: 70px;
+			}
+
+			.dl-horizontal dd {
+				margin-left: 90px;
+			}
+
+			#mapBx {
+				height: 300px;
+				position: relative;
+			}
+
+			button + #mapBx { height: 0; }
 
 		</style>
 
