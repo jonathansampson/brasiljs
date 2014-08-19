@@ -12,12 +12,25 @@
 	<body class="container">
 
 		<div class="col-md-12">
-			<h1><a href="/index.html">../</a> UI Responsiveness</h1>
+			<h1><img src="/res/img/netscape.gif" class="cool" /><a href="/index.html">../</a> UI Responsiveness</h1>
 		</div>
 		
 		<div class="col-md-6">
 
 			<h3>Pro Tip: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd></h3>
+			<p>Just try it. Let its awesomeness pour over you.</p>
+
+			<h3>Targeting Key Events</h3>
+			<p>The UI Responsiveness tool implicitly tracks certain key events, like <code>DOMContentLoaded</code>, and the <code>load</code> event.</p>
+			<p>You can also declare other events important enough for top-level reporting by using the <code>performance.mark</code> method.</p>
+			<button id="addImage" type="button" class="btn btn-default">Add Dog</button>
+			<button id="mark" type="button" class="btn btn-default">Issue Performance Mark</button>
+
+			<h3>TODO:</h3>
+			<ul>
+				<li>Add MediaQuery Listener</li>
+				<li>Add MutationObserver</li>
+			</ul>
 
 		</div>
 
@@ -30,18 +43,46 @@
 
 		"use strict";
 
+		document.addEventListener( "click", function whoa () {
+			//document.body.classList.add( "whoa" );
+			document.removeEventListener( "click", whoa );
+			setTimeout(function () {
+				document.body.classList.remove( "whoa" );
+			}, 10000);
+		});
+
+		var perfMark = document.querySelector( "#mark" ),
+			addImage = document.querySelector( "#addImage" );
+
+		perfMark.addEventListener( "click", function addMark () {
+			performance.mark( "Button Clicked" );
+		});
+
+		addImage.addEventListener( "click", function () {
+			var parent = this.parentElement;
+			var image = document.createElement( "img" );
+			image.src = "/res/img/skills.gif";
+			performance.mark( "Add Dog" );
+			parent.appendChild( image );
+			setTimeout(function () {
+				performance.mark( "Remove Dog" );
+				parent.removeChild( image );
+				performance.measure( "Dog Lifespan", "Add Dog", "Remove Dog" );
+			}, 5000);
+		});
+
+		var mQuery = window.matchMedia( "(max-width: 768px)" );
+
+		mQuery.addListener(function makeAwesome ( event ) {
+			document.body.classList[ event.matches ? "add" : "remove" ]( "awesome" );
+		});
+
+		console.dir( mQuery );
+
 	}());
 </script>
 
 <script>
-
-	document.addEventListener( "click", function whoa () {
-		document.body.classList.add( "whoa" );
-		document.removeEventListener( "click", whoa );
-		setTimeout(function () {
-			document.body.classList.remove( "whoa" );
-		}, 10000);
-	});
 
 </script>
 
@@ -62,6 +103,17 @@
 
 	body.whoa::before {
 		opacity: 1;
+	}
+
+	body.awesome {
+		color: #f1f1f1;
+		background: url("/res/img/stars.gif");
+	}
+
+	.cool { display: none; margin-right: 1em; }
+
+	body.awesome .cool {
+		display: inline;
 	}
 
 </style>
