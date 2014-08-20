@@ -44,7 +44,7 @@
 		"use strict";
 
 		document.addEventListener( "click", function whoa () {
-			//document.body.classList.add( "whoa" );
+			document.body.classList.add( "whoa" );
 			document.removeEventListener( "click", whoa );
 			setTimeout(function () {
 				document.body.classList.remove( "whoa" );

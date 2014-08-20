@@ -2,27 +2,64 @@
 <html>
 	<head>
 		<title>Jonathan Sampson - Mastering Internet Explorer's F12 Developer Tools</title>
-		<script type="text/javascript" src="/res/jquery-2.1.1/jquery-2.1.1.min.js"></script>
+		<script src="/res/jquery-2.1.1/jquery-2.1.1.min.js"></script>
+		<script src="/res/js/core-carryover.js"></script>
 		<link rel="stylesheet" type="text/css" href="/res/bootstrap-3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/res/css/main.css">
 	</head>
 	<body class="container">
+
+		<div class="col-md-12">
+			<h1><a href="/index.html">../</a> Memory</h1>
+		</div>
 		
 		<div class="col-md-6">
 
-			<h1><a href="/index.html">../</a> Memory</h1>
-
-			<ul>
-				<li>Scenario</li>
-			</ul>
+			<h3>Memory Monitoring</h3>
+			<button type="button" class="btn btn-default" id="addImages">Add Images</button>
+			<button type="button" class="btn btn-default" id="delImages">Del Images</button>
 
 		</div>
 
-		<div class="col-md-6">
-
-			<code>Source Code</code>
-
+		<div class="col-md-6 code-column">
+			<code id="code">...</code>
 		</div>
+
+<script id="core">
+	(function () {
+
+		"use strict";
+
+		var addImages = document.querySelector( "#addImages" ),
+			delImages = document.querySelector( "#delImages" );
+
+		// Lets do something brilliant!
+		var imgsArray = [];
+
+		addImages.addEventListener( "click", function addImages ( event ) {
+			performance.mark( "Adding Images" );
+			for ( var i = 0, count; i < 2; i++ ) {
+				var image = document.createElement( "img" );
+				image.src = "/res/img/skills.gif";
+				document.body.appendChild( image );
+				imgsArray.push( image );
+			}
+		});
+
+		delImages.addEventListener( "click", function delImages () {
+			performance.mark( "Deleting Images" );
+			var images = document.querySelectorAll( "img" );
+			for ( var i = 0; i < images.length; i++ ) {
+				images[ i ].parentElement.removeChild( images[i] );
+			}
+		});
+
+	}());
+</script>
+
+		<style>
+
+		</style>
 
 	</body>
 </html>
