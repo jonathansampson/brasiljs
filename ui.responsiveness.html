@@ -25,11 +25,32 @@
 			<p>You can also declare other events important enough for top-level reporting by using the <code>performance.mark</code> method.</p>
 			<button id="addImage" type="button" class="btn btn-default">Add Dog</button>
 			<button id="mark" type="button" class="btn btn-default">Issue Performance Mark</button>
+			<div id="imagesBox"></div>
 
-			<h3>TODO:</h3>
+			<h3>Measuring Events</h3>
+			<p>Using <code>performance.mark</code> along with <code>performance.measure</code> you can track the total time involved in a particular operation, as measured from mark to mark.</p>
+			<button type="button" class="btn btn-default" id="xhr">Measure XHR Request</button>
+
+			<h3>Event Categories</h3>
 			<ul>
-				<li>Add MediaQuery Listener</li>
-				<li>Add MutationObserver</li>
+				<li>DOM Load and Unload</li>
+				<li>HTTP Requests</li>
+				<li>HTML/CSS Parsing</li>
+				<li>Layout</li>
+				<li>Style Calculations</li>
+				<li>Timers</li>
+				<li>
+					DOM Events
+					<ul>
+						<li>DOMContentLoaded</li>
+						<li>DOMNodeRemoved</li>
+						<li>createElement</li>
+						<li>Load</li>
+						<li>Click</li>
+						<li>...</li>
+					</ul>
+				</li>
+				<li>Image Decoding</li>
 			</ul>
 
 		</div>
@@ -43,31 +64,20 @@
 
 		"use strict";
 
-		document.addEventListener( "click", function whoa () {
-			document.body.classList.add( "whoa" );
-			document.removeEventListener( "click", whoa );
-			setTimeout(function () {
-				document.body.classList.remove( "whoa" );
-			}, 10000);
-		});
-
 		var perfMark = document.querySelector( "#mark" ),
-			addImage = document.querySelector( "#addImage" );
+			addImage = document.querySelector( "#addImage" ),
+			imageBox = document.querySelector( "#imagesBox" );
 
 		perfMark.addEventListener( "click", function addMark () {
 			performance.mark( "Button Clicked" );
 		});
 
-		addImage.addEventListener( "click", function () {
-			var parent = this.parentElement;
-			var image = document.createElement( "img" );
-			image.src = "/res/img/skills.gif";
-			performance.mark( "Add Dog" );
-			parent.appendChild( image );
-			setTimeout(function () {
-				performance.mark( "Remove Dog" );
-				parent.removeChild( image );
-				performance.measure( "Dog Lifespan", "Add Dog", "Remove Dog" );
+		addImage.addEventListener( "click", function appendImage () {
+			var imageElm = document.createElement( "img" );
+			imageElm.src = "/res/img/skills.gif?i=" + Math.random();
+			imageBox.appendChild( imageElm );
+			setTimeout(function removeImage () {
+				imageBox.removeChild( imageElm );
 			}, 5000);
 		});
 
@@ -77,16 +87,40 @@
 			document.body.classList[ event.matches ? "add" : "remove" ]( "awesome" );
 		});
 
-		console.dir( mQuery );
+		var xhrButton = document.querySelector( "#xhr" );
+
+		xhrButton.addEventListener( "click", function initXHR () {
+			performance.mark( "XHR Sent" );
+			$.getJSON( "/res/features.json", function ( data ) {
+				performance.mark( "XHR Returned" );
+				xhrButton.textContent = data.length + " items retrieved";
+				performance.measure( "XHR Flight Time", "XHR Sent", "XHR Returned" );
+			});
+		});
 
 	}());
 </script>
 
 <script>
 
+	var proTip = document.querySelector( "h3" );
+
+	proTip.addEventListener( "click", function whoa () {
+		document.body.classList.add( "whoa" );
+		this.removeEventListener( "click", whoa );
+		setTimeout(function () {
+			document.body.classList.remove( "whoa" );
+		}, 10000);
+	});
+
 </script>
 
 <style>
+
+	body.whoa::before {
+		opacity: 1;
+		transition: opacity 2s;
+	}
 
 	body::before {
 		content: "";
@@ -94,15 +128,10 @@
 		opacity: 0;
 		position: absolute;
 		top: 50%; left: 50%;
-		transition: opacity 2s;
 		width: 50vmin; height: 50vmin;
 		background-size: 100% 100%;
 		transform: translate(-50%, -50%);
 		background-image: url("/res/img/mind.blown.gif");
-	}
-
-	body.whoa::before {
-		opacity: 1;
 	}
 
 	body.awesome {
