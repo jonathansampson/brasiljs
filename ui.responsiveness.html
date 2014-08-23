@@ -3,16 +3,16 @@
 	<head>
 		<title>Jonathan Sampson - Mastering Internet Explorer's F12 Developer Tools</title>
 		<script src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
-		<script src="/res/detect/detect.js"></script>
-		<script src="/res/jquery-2.1.1/jquery-2.1.1.min.js"></script>
-		<script src="/res/js/core-carryover.js"></script>
-		<link rel="stylesheet" type="text/css" href="/res/bootstrap-3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="/res/css/main.css">
+		<script src="res/detect/detect.js"></script>
+		<script src="res/jquery-2.1.1/jquery-2.1.1.min.js"></script>
+		<script src="res/js/core-carryover.js"></script>
+		<link rel="stylesheet" type="text/css" href="res/bootstrap-3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="res/css/main.css">
 	</head>
 	<body class="container">
 
 		<div class="col-md-12">
-			<h1><img src="/res/img/netscape.gif" class="cool" /><a href="/index.html">../</a> UI Responsiveness</h1>
+			<h1><img src="res/img/netscape.gif" class="cool" /><a href="index.html">../</a> UI Responsiveness</h1>
 		</div>
 		
 		<div class="col-md-6">
@@ -74,7 +74,7 @@
 
 		addImage.addEventListener( "click", function appendImage () {
 			var imageElm = document.createElement( "img" );
-			imageElm.src = "/res/img/skills.gif?i=" + Math.random();
+			imageElm.src = "res/img/skills.gif?i=" + Math.random();
 			imageBox.appendChild( imageElm );
 			setTimeout(function removeImage () {
 				imageBox.removeChild( imageElm );
@@ -91,7 +91,7 @@
 
 		xhrButton.addEventListener( "click", function initXHR () {
 			performance.mark( "XHR Sent" );
-			$.getJSON( "/res/features.json", function ( data ) {
+			$.getJSON( "res/features.json", function ( data ) {
 				performance.mark( "XHR Returned" );
 				xhrButton.textContent = data.length + " items retrieved";
 				performance.measure( "XHR Flight Time", "XHR Sent", "XHR Returned" );
@@ -131,12 +131,12 @@
 		width: 50vmin; height: 50vmin;
 		background-size: 100% 100%;
 		transform: translate(-50%, -50%);
-		background-image: url("/res/img/mind.blown.gif");
+		background-image: url("res/img/mind.blown.gif");
 	}
 
 	body.awesome {
 		color: #f1f1f1;
-		background: url("/res/img/stars.gif");
+		background: url("res/img/stars.gif");
 	}
 
 	.cool { display: none; margin-right: 1em; }
